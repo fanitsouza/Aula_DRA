@@ -3,50 +3,35 @@ package teste;
 import dao.GenericoDAO;
 import modelo.Cidade;
 import modelo.Estado;
+import modelo.Interesse;
 import modelo.Pessoa;
 import util.ConexaoUtil;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import java.util.ArrayList;
+import java.util.List;
 
-public class TestaCidadeComPessoas {
+public class TestaPessoaInteresse {
 
     public static void inserir(){
 
-        GenericoDAO<Cidade> genericoDAO = new GenericoDAO<>(ConexaoUtil.getEntityManager(), Cidade.class);
-        GenericoDAO<Estado> estadoDAO = new GenericoDAO<>(ConexaoUtil.getEntityManager(), Estado.class);
+        GenericoDAO<Interesse> genericoDAO = new GenericoDAO<>(ConexaoUtil.getEntityManager(), Interesse.class);
         GenericoDAO<Pessoa> pessoaDAO = new GenericoDAO<>(ConexaoUtil.getEntityManager(), Pessoa.class);
+        GenericoDAO<Cidade> cidadeDAO = new GenericoDAO<>(ConexaoUtil.getEntityManager(), Cidade.class);
 
-        Estado estado = new Estado();
-        estado.setNome("Amazonas");
-        estado.setIbge("1235698");
 
-        estadoDAO.inserir(estado);
+        //Interesse interesse = new Interesse();
+        //interesse.setNome("Economia");
+        //genericoDAO.inserir(interesse);
 
-        Cidade cidade = new Cidade();
-        cidade.setNome("Manaus");
-        cidade.setIbge("5236941");
-        cidade.setEstado(estado);
+        Cidade cidade = cidadeDAO.consultar(1L);
+        Pessoa pessoa = new Pessoa("85296374125","Mateus", "86542347", "matheus@gmail.com");
+        pessoa.setCidade(cidade);
+        pessoaDAO.inserir(pessoa);
+        //List<Interesse> interesses = new ArrayList<>();
+        //interesses.add(interesse);
+        //pessoa.setInteresses(interesses);
 
-        genericoDAO.inserir(cidade);
 
-        Pessoa pessoa1 = new Pessoa();
-        pessoa1.setNome("Maria Antonia");
-        pessoa1.setCpf("12345678912");
-        pessoa1.setEmail("maria@gmail.com");
-        pessoa1.setTelefone("36251224");
-        pessoa1.setCidade(cidade);
-
-        Pessoa pessoa2 = new Pessoa();
-        pessoa2.setNome("Jose Antonio");
-        pessoa2.setCpf("98765432198");
-        pessoa2.setEmail("jose@gmail.com");
-        pessoa2.setTelefone("96857884");
-        pessoa2.setCidade(cidade);
-
-        pessoaDAO.inserir(pessoa1);
-        pessoaDAO.inserir(pessoa2);
 
     }
 
@@ -76,7 +61,7 @@ public class TestaCidadeComPessoas {
     }
 
     public static void main(String[] args) {
-        consultarCidadeePessoas();
+        inserir();
     }
 
 }

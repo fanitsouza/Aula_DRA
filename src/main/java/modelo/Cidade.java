@@ -19,7 +19,7 @@ public class Cidade {
     @ManyToOne
     private Estado estado;
 
-    @OneToMany(mappedBy = "cidade")
+    @OneToMany(mappedBy = "cidade", fetch = FetchType.EAGER)
     private List<Pessoa> pessoas = new ArrayList<>();
 
 

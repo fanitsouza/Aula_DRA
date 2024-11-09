@@ -1,6 +1,8 @@
 package modelo;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Pessoa {
@@ -21,6 +23,9 @@ public class Pessoa {
 
     @ManyToOne
     private Cidade cidade;
+
+    @ManyToMany
+    private List<Interesse> interesses = new ArrayList<>();
 
     public Pessoa() {
     }
@@ -85,8 +90,24 @@ public class Pessoa {
         return cidade;
     }
 
+    public List<Interesse> getInteresses() {
+        return interesses;
+    }
+
+    public void setInteresses(List<Interesse> interesses) {
+        this.interesses = interesses;
+    }
+
     public void setCidade(Cidade cidade) {
         this.cidade = cidade;
         cidade.addPessoa(this);
+    }
+
+    public void addInteresse(Interesse interesse){
+        if (!this.interesses.contains(interesse)){
+            this.interesses.add(interesse);
+            interesse.addPessoa(this);
+        }
+
     }
 }
